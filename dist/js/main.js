@@ -22789,8 +22789,29 @@ var ItemTypes = {
     PERSON: 'person'
 };
 
-var ListItem = React.createClass({displayName: 'ListItem',
+var Person = React.createClass({displayName: 'Person',
     mixins: [DragDropMixin],
+    propTypes: {
+        name: React.PropTypes.string,
+        isInBox: React.PropTypes.bool
+    },
+    configureDragDrop: function (registerType) {
+        debugger;
+        registerType(ItemTypes.PERSON, {
+            dragSource: {
+                canDrag: function () {
+                    return true;
+                },
+
+                beginDrag: function () {
+                    return {
+                        item: { name: this.props.name }
+                    };
+                }
+            }
+        });
+    },
+
 
     render: function () {
         return (
@@ -22803,7 +22824,7 @@ var List = React.createClass({displayName: 'List',
     render: function () {
         var itemHtml = this.props.items.map(function (item, key) {
             return (
-                React.createElement(ListItem, {name: item})
+                React.createElement(Person, {name: item})
             )
         });
         return (
@@ -22822,6 +22843,7 @@ var Cart = React.createClass({displayName: 'Cart',
             dropTarget: {
                 acceptDrop: function (person) {
                     // Specify action on drop
+                    debugger;
                     this.props.onAddPerson(person.name);
                 }
             }
