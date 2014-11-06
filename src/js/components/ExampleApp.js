@@ -1,12 +1,25 @@
 var React = require('react/addons');
 var { DragDropMixin } = require('react-dnd');
 
+var ItemTypes = {
+    PERSON: 'person'
+};
+
+var ListItem = React.createClass({
+    mixins: [DragDropMixin],
+
+    render: function () {
+        return (
+            <li {...this.dropTargetFor(ItemTypes.PERSON)}>{this.props.name}</li>
+        )
+    }
+});
 
 var List = React.createClass({
     render: function () {
         var itemHtml = this.props.items.map(function (item, key) {
             return (
-                <li>{item}</li>
+                <ListItem name={item}/>
             )
         });
         return (
@@ -19,6 +32,18 @@ var List = React.createClass({
     }
 });
 var Cart = React.createClass({
+    mixins: [DragDropMixin],
+    configureDragDrop: function (registerType) {
+        registerType(ItemTypes.PERSON, {
+            dropTarget: {
+                acceptDrop: function (person) {
+                    // Specify action on drop
+                    this.props.onAddPerson(person.name);
+                }
+            }
+        });
+    },
+
     render: function () {
         var count = this.props.items.length;
         return (

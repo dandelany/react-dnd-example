@@ -21,5 +21,13 @@
     "object-assign": "~1.0.0",
     "harmony-reflect": "~1.1.0"
   },
+  "browserify": {
+    "transform": [
+      [
+        "reactify",
+        {"harmony": true}
+      ]
+    ]
+  },
   "dependencies": {}
 }
