@@ -31,7 +31,7 @@ var Person = React.createClass({
 
     render: function () {
         return (
-            <li {...this.dropTargetFor(ItemTypes.PERSON)}>{this.props.name}</li>
+            <li {...this.dragSourceFor(ItemTypes.PERSON)}>{this.props.name}</li>
         )
     }
 });
@@ -69,7 +69,7 @@ var Cart = React.createClass({
     render: function () {
         var count = this.props.items.length;
         return (
-            <div className="cart">
+            <div {...this.dropTargetFor(ItemTypes.PERSON)} className="cart">
             Count: {count}
             </div>
         )
